@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using XCode.DataAccessLayer;
+using MicroserviceCodeTable.Model;
+using NewLife.Log;
+using Microsoft.Data.SqlClient;
 
 namespace MicroserviceCodeTable.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class CodeTableController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -23,26 +26,55 @@ namespace MicroserviceCodeTable.Controllers
         {
             _logger = logger;
         }
-
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<TmpStstSelect> Get()
         {
+            return TmpStstSelect.FindAllByStstDesc("西");
+        }
+        //[HttpGet]
+        //public IEnumerable<WeatherForecast> Get()
+        //{
+        //    var rng = new Random();
+        //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        //    {
+        //        Date = DateTime.Now.AddDays(index),
+        //        TemperatureC = rng.Next(-20, 55),
+        //        Summary = Summaries[rng.Next(Summaries.Length)]
+        //    })
+        //    .ToArray();
+        //}
 
-            var dal = XCode.DataAccessLayer.DAL.Create("MSSQL119");
-            var list = dal.Query("select top 100 * from bag");
-            var db = DAL.Create("adb");
-            var test = dal.Query("selec top 1 * from STST");
-            //var db = dal.Create("");
+        // [HttpGet("{name}")]
+        // public  IList<TmpStstSelect> GetByName(string name)
+        // {
+        //     return TmpStstSelect.FindByName(name);
+        // }
+
+        //[HttpGet("{spspDesc}")]
+        //public IList<TmpStstSelect> FindAllBySpspDesc(String spspDesc)
+        //{
+        //    return TmpStstSelect.FindByName(spspDesc);
+        //}
+
+        [HttpGet("spsp/{desc}")]
+        public async Task<IActionResult> FindAllBySpspDesc(String desc)
+            => await Task.FromResult(new JsonResult(TmpSpspSelect.FindAllBySpspDesc(desc).Select(x => new { Id = x.SpspID, Text = x.SpspDesc })));
 
 
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+        [HttpGet("stst/{desc}")]
+        public async Task<IActionResult> FindAllByStstDesc(String desc)
+            => await Task.FromResult(new JsonResult(TmpStstSelect.FindAllByStstDesc(desc).Select(x => new { Id = x.SpspID, Text = x.SpspDesc })));
+
+        [HttpGet("id/{id}")]
+        public async Task<IActionResult> FindById(String id)
+            => await Task.FromResult(new JsonResult(TmpStstSelect.FindById(id)));
+
+        [HttpGet("test")]
+        public string test()
+        {
+            TmpStstSelect.Meta.Cache.Clear(nameof(TmpStstSelect));
+            return "gogogo";
         }
     }
+
 }

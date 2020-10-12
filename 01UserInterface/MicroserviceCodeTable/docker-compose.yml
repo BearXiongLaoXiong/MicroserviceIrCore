@@ -1,0 +1,31 @@
+version: '3.3'
+services:
+  webservice1:
+    build:
+      context: .
+      dockerfile: 01UserInterface/MicroserviceCodeTable/Dockerfile
+    image: xiongwebapi
+    ports:
+      - 17101:80/tcp
+    command: ["dotnet", "/app/MicroserviceCodeTable","--urls=http://*:80","--ip=127.0.0.1","--port=17101"]
+  webservice2:
+    image: xiongwebapi
+    ports:
+      - 17102:80/tcp
+    command: ["dotnet", "/app/MicroserviceCodeTable","--urls=http://*:80","--ip=127.0.0.1","--port=17102"]
+  webservice3:
+    image: xiongwebapi
+    ports:
+      - 17103:80/tcp
+    command: ["dotnet", "/app/MicroserviceCodeTable","--urls=http://*:80","--ip=127.0.0.1","--port=17103"]
+  webservice4:
+    image: xiongwebapi
+    ports:
+      - 17104:80/tcp
+    command: ["dotnet", "/app/MicroserviceCodeTable","--urls=http://*:80","--ip=127.0.0.1","--port=17104"]
+  nginxservice:
+    image: nginx:latest
+    ports:
+      - 80:80/tcp
+    volumes:
+      - /home/xiong/webapi/xnginx/nginx.conf:/etc/nginx/nginx.conf

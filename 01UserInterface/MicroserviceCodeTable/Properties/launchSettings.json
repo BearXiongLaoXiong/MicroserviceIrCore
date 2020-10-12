@@ -26,7 +26,7 @@
       },
       "applicationUrl": "http://localhost:5000"
     },
-    "Docker (1)": {
+    "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/weatherforecast",

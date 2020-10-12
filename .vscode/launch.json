@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}\\01UserInterface\\MicroserviceCodeTable\\bin\\Debug\\netcoreapp5.0\\MicroserviceCodeTable.dll",
+            "program": "${workspaceFolder}\\01UserInterface\\MicroserviceCodeTable\\bin\\Debug\\netcoreapp3.1\\MicroserviceCodeTable.dll",
             "args": [],
             "cwd": "${workspaceFolder}\\01UserInterface",
             "stopAtEntry": false,
