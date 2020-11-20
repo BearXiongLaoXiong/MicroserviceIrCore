@@ -2,7 +2,8 @@
 
 namespace MicroserviceIServer
 {
-    public class Class1
+    public interface IDbContext
     {
+       
     }
 }

@@ -1,13 +1,12 @@
+using MicroserviceCodeTable.Model;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using XCode.DataAccessLayer;
-using MicroserviceCodeTable.Model;
-using NewLife.Log;
-using Microsoft.Data.SqlClient;
+using System.Web;
 
 namespace MicroserviceCodeTable.Controllers
 {
@@ -56,24 +55,67 @@ namespace MicroserviceCodeTable.Controllers
         //    return TmpStstSelect.FindByName(spspDesc);
         //}
 
-        [HttpGet("spsp/{desc}")]
-        public async Task<IActionResult> FindAllBySpspDesc(String desc)
-            => await Task.FromResult(new JsonResult(TmpSpspSelect.FindAllBySpspDesc(desc).Select(x => new { Id = x.SpspID, Text = x.SpspDesc })));
+        //[HttpGet("spsp/{dbflag}/{desc}/")]
+        [HttpGet("spsp")]
+        public async Task<IActionResult> FindAllBySpspDesc(string dbFlag, String desc)
+            => await Task.FromResult(new JsonResult(TmpSpspSelect.FindAllBySpspDesc(dbFlag, HttpUtility.UrlDecode(desc, Encoding.UTF8))?.Select(x => new { Id = x.SpspID, Text = x.SpspDesc })));
 
 
-        [HttpGet("stst/{desc}")]
-        public async Task<IActionResult> FindAllByStstDesc(String desc)
-            => await Task.FromResult(new JsonResult(TmpStstSelect.FindAllByStstDesc(desc).Select(x => new { Id = x.SpspID, Text = x.SpspDesc })));
+        [HttpGet("stst")]
+        public async Task<IActionResult> FindAllByStstDesc(string dbFlag, String desc)
+            => await Task.FromResult(new JsonResult(TmpStstSelect.FindAllByStstDesc(HttpUtility.UrlDecode(desc, Encoding.UTF8))?.Select(x => new { Id = x.SpspID, Text = x.SpspDesc })));
 
-        [HttpGet("id/{id}")]
+        [HttpGet("hphp")]
+        public async Task<IActionResult> FindAllByHphpDesc(string dbFlag, String desc)
+            => await Task.FromResult(new JsonResult(TmpHphpSelect.FindAllByHphpDesc(HttpUtility.UrlDecode(desc, Encoding.UTF8))?.Select(x => new { Id = x.HphpID, Text = x.HphpName, Field1 = x.ScctName })));
+
+        [HttpGet("dada")]
+        public async Task<IActionResult> FindAllByDadaDesc(string dbFlag, String desc)
+            => await Task.FromResult(new JsonResult(TbehDadaDiagInfo.FindAllByDadaDesc(HttpUtility.UrlDecode(desc, Encoding.UTF8))?.Select(x => new { Id = x.DadaID, Text = x.DadaDesc })));
+
+
+        [HttpGet("id")]
         public async Task<IActionResult> FindById(String id)
             => await Task.FromResult(new JsonResult(TmpStstSelect.FindById(id)));
 
-        [HttpGet("test")]
-        public string test()
+        [HttpGet("ReLoadCache/{type}/")]
+        public string ReLoadCache(string type)
         {
-            TmpStstSelect.Meta.Cache.Clear(nameof(TmpStstSelect));
-            return "gogogo";
+            switch (type)
+            {
+                case "spsp":
+                    TmpSpspSelect.Meta.Cache.Clear(nameof(TmpSpspSelect));
+                    TmpSpspSelect.FindAllBySpspDesc("flag", "1");
+                    return $"Success 200.{nameof(TmpSpspSelect)}";
+                case "stst":
+                    TmpStstSelect.Meta.Cache.Clear(nameof(TmpStstSelect));
+                    TmpStstSelect.FindAllByStstDesc("1");
+                    return $"Success 200.{nameof(TmpStstSelect)}";
+                case "hphp":
+                    TmpHphpSelect.Meta.Cache.Clear(nameof(TmpHphpSelect));
+                    TmpHphpSelect.FindAllByHphpDesc("1");
+                    return $"Success 200.{nameof(TmpHphpSelect)}";
+                case "dada":
+                    TbehDadaDiagInfo.Meta.Cache.Clear(nameof(TbehDadaDiagInfo));
+                    TbehDadaDiagInfo.FindAllByDadaDesc("1");
+                    return $"Success 200.{nameof(TbehDadaDiagInfo)}";
+                default: return "none";
+            }
+        }
+
+        [HttpGet("test/{a}/{b}")]
+        public string test(string a, string b)
+        {
+
+            return "(" + a + "-" + b + ")";
+        }
+
+        public enum CodeTableTypes
+        {
+            Spsp,
+            Stst,
+            Hphp,
+            Dada
         }
     }
 

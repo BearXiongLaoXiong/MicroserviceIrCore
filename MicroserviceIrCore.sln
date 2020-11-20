@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "08Test\Conso
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroserviceServer", "03DoMain\MicroserviceServer\MicroserviceServer.csproj", "{BD68EA7C-A594-433D-8B20-A8C79EB04D3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "08Test\WindowsFormsApp1\WindowsFormsApp1.csproj", "{3B76EBFC-B927-400D-98DD-0A24857756E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{BD68EA7C-A594-433D-8B20-A8C79EB04D3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD68EA7C-A594-433D-8B20-A8C79EB04D3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD68EA7C-A594-433D-8B20-A8C79EB04D3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B76EBFC-B927-400D-98DD-0A24857756E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B76EBFC-B927-400D-98DD-0A24857756E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B76EBFC-B927-400D-98DD-0A24857756E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B76EBFC-B927-400D-98DD-0A24857756E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{B4B4C6C9-2560-4986-BB8B-BB6589C56BDB} = {AB753E20-E71A-42C4-A8A0-DE85059925A9}
 		{91EF6911-CB42-4ED7-A850-92096E7E079A} = {388288C2-4290-4A6D-AB9F-1B02278971EB}
 		{BD68EA7C-A594-433D-8B20-A8C79EB04D3A} = {AB753E20-E71A-42C4-A8A0-DE85059925A9}
+		{3B76EBFC-B927-400D-98DD-0A24857756E5} = {388288C2-4290-4A6D-AB9F-1B02278971EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {36A34B45-C077-4819-943D-3DE4B5D6F8A7}

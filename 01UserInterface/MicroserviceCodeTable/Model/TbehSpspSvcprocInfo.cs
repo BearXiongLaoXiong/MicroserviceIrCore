@@ -10,25 +10,19 @@ namespace MicroserviceCodeTable.Model
     /// <summary></summary>
     [Serializable]
     [DataObject]
-    [BindIndex("IX_TMP_SPSP_SELECT", false, "SPSP_DESC")]
-    [BindTable("TMP_SPSP_SELECT", Description = "", ConnName = "MSSQLTPAPROD", DbType = DatabaseType.SqlServer)]
-    public partial class TmpSpspSelect : ITmpSpspSelect
+    [BindIndex("PK_TBEH_SPSP_SVCPROC_INFO", true, "SPSP_ID")]
+    [BindTable("TBEH_SPSP_SVCPROC_INFO", Description = "", ConnName = "MSSQLTPAPROD", DbType = DatabaseType.SqlServer)]
+    public partial class TbehSpspSvcprocInfo : ITbehSpspSvcprocInfo
     {
         #region 属性
-        private Int32 _SpspKy;
-        /// <summary></summary>
-        [DisplayName("SpspKy")]
-        [DataObjectField(true, true, false, 10)]
-        [BindColumn("SPSP_KY", "", "int")]
-        public Int32 SpspKy { get => _SpspKy; set { if (OnPropertyChanging(__.SpspKy, value)) { _SpspKy = value; OnPropertyChanged(__.SpspKy); } } }
-
         private String _SpspID;
         /// <summary></summary>
         [DisplayName("SpspID")]
-        [DataObjectField(false, false, false, 12)]
+        [DataObjectField(true, false, false, 12)]
         [BindColumn("SPSP_ID", "", "varchar(12)")]
         public String SpspID { get => _SpspID; set { if (OnPropertyChanging(__.SpspID, value)) { _SpspID = value; OnPropertyChanged(__.SpspID); } } }
 
+        
         private String _SpspDesc;
         /// <summary></summary>
         [DisplayName("SpspDesc")]
@@ -68,10 +62,11 @@ namespace MicroserviceCodeTable.Model
             {
                 switch (name)
                 {
-                    case __.SpspKy: return _SpspKy;
                     case __.SpspID: return _SpspID;
+                 
                     case __.SpspDesc: return _SpspDesc;
                     case __.SpspDescEng: return _SpspDescEng;
+             
                     case __.SpspNameFst: return _SpspNameFst;
                     case __.SpspNameFul: return _SpspNameFul;
                     default: return base[name];
@@ -81,10 +76,11 @@ namespace MicroserviceCodeTable.Model
             {
                 switch (name)
                 {
-                    case __.SpspKy: _SpspKy = value.ToInt(); break;
                     case __.SpspID: _SpspID = Convert.ToString(value); break;
+              
                     case __.SpspDesc: _SpspDesc = Convert.ToString(value); break;
                     case __.SpspDescEng: _SpspDescEng = Convert.ToString(value); break;
+                   
                     case __.SpspNameFst: _SpspNameFst = Convert.ToString(value); break;
                     case __.SpspNameFul: _SpspNameFul = Convert.ToString(value); break;
                     default: base[name] = value; break;
@@ -94,14 +90,12 @@ namespace MicroserviceCodeTable.Model
         #endregion
 
         #region 字段名
-        /// <summary>取得TmpSpspSelect字段信息的快捷方式</summary>
+        /// <summary>取得TbehSpspSvcprocInfo字段信息的快捷方式</summary>
         public partial class _
         {
             /// <summary></summary>
-            public static readonly Field SpspKy = FindByName(__.SpspKy);
-
-            /// <summary></summary>
             public static readonly Field SpspID = FindByName(__.SpspID);
+
 
             /// <summary></summary>
             public static readonly Field SpspDesc = FindByName(__.SpspDesc);
@@ -109,6 +103,7 @@ namespace MicroserviceCodeTable.Model
             /// <summary></summary>
             public static readonly Field SpspDescEng = FindByName(__.SpspDescEng);
 
+           
             /// <summary></summary>
             public static readonly Field SpspNameFst = FindByName(__.SpspNameFst);
 
@@ -118,12 +113,9 @@ namespace MicroserviceCodeTable.Model
             static Field FindByName(String name) => Meta.Table.FindByName(name);
         }
 
-        /// <summary>取得TmpSpspSelect字段名称的快捷方式</summary>
+        /// <summary>取得TbehSpspSvcprocInfo字段名称的快捷方式</summary>
         public partial class __
         {
-            /// <summary></summary>
-            public const String SpspKy = "SpspKy";
-
             /// <summary></summary>
             public const String SpspID = "SpspID";
 
@@ -132,6 +124,7 @@ namespace MicroserviceCodeTable.Model
 
             /// <summary></summary>
             public const String SpspDescEng = "SpspDescEng";
+
 
             /// <summary></summary>
             public const String SpspNameFst = "SpspNameFst";
@@ -143,12 +136,9 @@ namespace MicroserviceCodeTable.Model
     }
 
     /// <summary>接口</summary>
-    public partial interface ITmpSpspSelect
+    public partial interface ITbehSpspSvcprocInfo
     {
         #region 属性
-        /// <summary></summary>
-        Int32 SpspKy { get; set; }
-
         /// <summary></summary>
         String SpspID { get; set; }
 

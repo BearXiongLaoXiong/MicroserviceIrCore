@@ -10,17 +10,11 @@ namespace MicroserviceCodeTable.Model
     /// <summary></summary>
     [Serializable]
     [DataObject]
-    [BindTable("TMP_STST_SELECT", Description = "", ConnName = "MSSQL119", DbType = DatabaseType.SqlServer)]
+    [BindTable("TMP_STST_SELECT", Description = "", ConnName = "MSSQLTPAPROD", DbType = DatabaseType.SqlServer)]
     public partial class TmpStstSelect : ITmpStstSelect
     {
         #region 属性
-        private Int32 _StstKy;
-        /// <summary></summary>
-        [DisplayName("StstKy")]
-        [DataObjectField(true, true, false, 10)]
-        [BindColumn("STST_KY", "", "int")]
-        public Int32 StstKy { get => _StstKy; set { if (OnPropertyChanging(__.StstKy, value)) { _StstKy = value; OnPropertyChanged(__.StstKy); } } }
-
+       
         private String _SpspID;
         /// <summary></summary>
         [DisplayName("SpspID")]
@@ -67,7 +61,6 @@ namespace MicroserviceCodeTable.Model
             {
                 switch (name)
                 {
-                    case __.StstKy: return _StstKy;
                     case __.SpspID: return _SpspID;
                     case __.SpspDesc: return _SpspDesc;
                     case __.SpspDescEng: return _SpspDescEng;
@@ -80,7 +73,6 @@ namespace MicroserviceCodeTable.Model
             {
                 switch (name)
                 {
-                    case __.StstKy: _StstKy = value.ToInt(); break;
                     case __.SpspID: _SpspID = Convert.ToString(value); break;
                     case __.SpspDesc: _SpspDesc = Convert.ToString(value); break;
                     case __.SpspDescEng: _SpspDescEng = Convert.ToString(value); break;
@@ -97,7 +89,7 @@ namespace MicroserviceCodeTable.Model
         public partial class _
         {
             /// <summary></summary>
-            public static readonly Field StstKy = FindByName(__.StstKy);
+           
 
             /// <summary></summary>
             public static readonly Field SpspID = FindByName(__.SpspID);
@@ -120,8 +112,7 @@ namespace MicroserviceCodeTable.Model
         /// <summary>取得TmpStstSelect字段名称的快捷方式</summary>
         public partial class __
         {
-            /// <summary></summary>
-            public const String StstKy = "StstKy";
+            
 
             /// <summary></summary>
             public const String SpspID = "SpspID";
@@ -145,8 +136,7 @@ namespace MicroserviceCodeTable.Model
     public partial interface ITmpStstSelect
     {
         #region 属性
-        /// <summary></summary>
-        Int32 StstKy { get; set; }
+       
 
         /// <summary></summary>
         String SpspID { get; set; }

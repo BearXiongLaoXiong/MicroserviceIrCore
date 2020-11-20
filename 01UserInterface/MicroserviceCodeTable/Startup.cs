@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using System.Threading.Tasks;
+using MicroserviceCodeTable.Common;
+using MicroserviceCodeTable.Common.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +29,12 @@ namespace MicroserviceCodeTable
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
+            });
+            services.AddSingleton<IDbContext, MainDbContext>();
+            services.InitializeDbConnectionString();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +48,8 @@ namespace MicroserviceCodeTable
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //app.UseInitializeDbConnectionStringCacheMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

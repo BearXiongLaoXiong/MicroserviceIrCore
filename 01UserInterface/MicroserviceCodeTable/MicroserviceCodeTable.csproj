@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -8,8 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.0-preview1.20235.1" />
-    <PackageReference Include="NewLife.XCode" Version="9.20.2020.914-beta2" />
+    <Compile Remove="Model\TbehHphpHospitalInfo.Biz.cs" />
+    <Compile Remove="Model\TbehHphpHospitalInfo.cs" />
+    <Compile Remove="Model\TbehSpspSvcprocInfo.Biz.cs" />
+    <Compile Remove="Model\TbehSpspSvcprocInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="appsettings.Development.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.0-preview2.20297.7" />
+    <PackageReference Include="NewLife.Redis" Version="3.8.2020.1101" />
+    <PackageReference Include="NewLife.XCode" Version="10.0.2020.1101" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
