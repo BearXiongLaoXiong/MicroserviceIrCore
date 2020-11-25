@@ -94,7 +94,7 @@ namespace MicroserviceCodeTable.Model
         #region 扩展查询
 
         private static IEnumerable<TmpHphpSelect> SearchKey(IEnumerable<TmpHphpSelect> iEnumerable, string key)
-        => iEnumerable == null || string.IsNullOrWhiteSpace(key) ? iEnumerable : iEnumerable.Where(x => (x.HphpName ?? "").Contains(key) || (x.HphpID ?? "").Contains(key) || (x.ScctName ?? "").Contains(key) || (x.HphpNameFst ?? "").Contains(key) || (x.HphpNameFul ?? "").Contains(key));
+        => iEnumerable == null || string.IsNullOrWhiteSpace(key) ? iEnumerable : iEnumerable.Where(x => x.HphpName.Contains(key) || x.HphpID.Contains(key) || x.ScctName.Contains(key) || x.HphpNameFst.Contains(key) || x.HphpNameFul.Contains(key));
 
         public static IEnumerable<TmpHphpSelect> FindAllByHphpDesc(String desc)
         {

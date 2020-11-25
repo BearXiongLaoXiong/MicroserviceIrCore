@@ -111,8 +111,7 @@ namespace MicroserviceCodeTable.Model
         }
 
         private static IEnumerable<TmpStstSelect> SearchKey(IEnumerable<TmpStstSelect> iEnumerable, string key)
-        => iEnumerable == null || string.IsNullOrWhiteSpace(key) ? iEnumerable : iEnumerable.Where(x => (x.SpspDesc ?? "").Contains(key) || (x.SpspID ?? "").Contains(key) || (x.SpspNameFst ?? "").Contains(key) || (x.SpspNameFst ?? "").Contains(key) || (x.SpspNameFul ?? "").Contains(key));
-
+        => iEnumerable == null || string.IsNullOrWhiteSpace(key) ? iEnumerable : iEnumerable.Where(x => x.SpspDesc.Contains(key) || x.SpspNameFst.Contains(key) || x.SpspNameFul.Contains(key));
 
         public static IEnumerable<TmpStstSelect> FindAllByStstDesc(String desc)
         {

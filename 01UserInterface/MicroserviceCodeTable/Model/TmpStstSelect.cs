@@ -15,35 +15,35 @@ namespace MicroserviceCodeTable.Model
     {
         #region 属性
        
-        private String _SpspID;
+        private String _SpspID = "";
         /// <summary></summary>
         [DisplayName("SpspID")]
         [DataObjectField(false, false, false, 12)]
         [BindColumn("SPSP_ID", "", "varchar(12)")]
         public String SpspID { get => _SpspID; set { if (OnPropertyChanging(__.SpspID, value)) { _SpspID = value; OnPropertyChanged(__.SpspID); } } }
 
-        private String _SpspDesc;
+        private String _SpspDesc = "";
         /// <summary></summary>
         [DisplayName("SpspDesc")]
         [DataObjectField(false, false, false, 555)]
         [BindColumn("SPSP_DESC", "", "varchar(555)")]
         public String SpspDesc { get => _SpspDesc; set { if (OnPropertyChanging(__.SpspDesc, value)) { _SpspDesc = value; OnPropertyChanged(__.SpspDesc); } } }
 
-        private String _SpspDescEng;
+        private String _SpspDescEng = "";
         /// <summary></summary>
         [DisplayName("SpspDescEng")]
         [DataObjectField(false, false, false, 555)]
         [BindColumn("SPSP_DESC_ENG", "", "varchar(555)")]
         public String SpspDescEng { get => _SpspDescEng; set { if (OnPropertyChanging(__.SpspDescEng, value)) { _SpspDescEng = value; OnPropertyChanged(__.SpspDescEng); } } }
 
-        private String _SpspNameFst;
+        private String _SpspNameFst = "";
         /// <summary></summary>
         [DisplayName("SpspNameFst")]
         [DataObjectField(false, false, false, 155)]
         [BindColumn("SPSP_NAME_FST", "", "varchar(155)")]
         public String SpspNameFst { get => _SpspNameFst; set { if (OnPropertyChanging(__.SpspNameFst, value)) { _SpspNameFst = value; OnPropertyChanged(__.SpspNameFst); } } }
 
-        private String _SpspNameFul;
+        private String _SpspNameFul = "";
         /// <summary></summary>
         [DisplayName("SpspNameFul")]
         [DataObjectField(false, false, false, 555)]

@@ -15,14 +15,14 @@ namespace MicroserviceCodeTable.Model
     public partial class TbehDadaDiagInfo : ITbehDadaDiagInfo
     {
         #region 属性
-        private String _DadaID;
+        private String _DadaID = "";
         /// <summary></summary>
         [DisplayName("DadaID")]
         [DataObjectField(true, false, false, 255)]
         [BindColumn("DADA_ID", "", "nvarchar(255)")]
         public String DadaID { get => _DadaID; set { if (OnPropertyChanging(__.DadaID, value)) { _DadaID = value; OnPropertyChanged(__.DadaID); } } }
 
-        private String _DadaDesc;
+        private String _DadaDesc = "";
         /// <summary></summary>
         [DisplayName("DadaDesc")]
         [DataObjectField(false, false, true, 255)]
@@ -30,14 +30,14 @@ namespace MicroserviceCodeTable.Model
         public String DadaDesc { get => _DadaDesc; set { if (OnPropertyChanging(__.DadaDesc, value)) { _DadaDesc = value; OnPropertyChanged(__.DadaDesc); } } }
 
        
-        private String _DadaNameFst;
+        private String _DadaNameFst = "";
         /// <summary></summary>
         [DisplayName("DadaNameFst")]
         [DataObjectField(false, false, true, 255)]
         [BindColumn("DADA_NAME_FST", "", "nvarchar(255)")]
         public String DadaNameFst { get => _DadaNameFst; set { if (OnPropertyChanging(__.DadaNameFst, value)) { _DadaNameFst = value; OnPropertyChanged(__.DadaNameFst); } } }
 
-        private String _DadaNameFul;
+        private String _DadaNameFul="";
         /// <summary></summary>
         [DisplayName("DadaNameFul")]
         [DataObjectField(false, false, true, 255)]

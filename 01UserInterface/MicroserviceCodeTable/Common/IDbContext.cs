@@ -2,6 +2,8 @@
 using NewLife;
 using NewLife.Caching;
 using NewLife.Log;
+using NewLife.Serialization;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,14 @@ namespace MicroserviceCodeTable.Common
 
     public class MainDbContext : IDbContext
     {
+        private readonly FullRedis _redis = new FullRedis();
+
+        public MainDbContext()
+        {
+            _redis.Log = XTrace.Log;
+            _redis.Init("Server=10.127.2.16:7001;Password=123456;Db=0");
+        }
+
         private readonly ICache _cache = MemoryCache.Instance;
         public IEnumerable<CaseCountModel> GetDbContextList(string jobQueueFlag)
         {
@@ -25,20 +35,46 @@ namespace MicroserviceCodeTable.Common
             var stateList = res.StateList;
             Expression<Func<CaseCountModel, bool>> expression = ex => stateList.Contains(ex.States);
 
+            var key = $"casecount:prd:{res.Level}";
+
             var list = new List<CaseCountModel>();
-            if (!_cache.Keys.Contains(res.Level))
+            if (!_redis.ContainsKey(key))
             {
                 foreach (var item in DAL.ConnStrs.Keys.Where(k => k.StartsWith("p")))
                 {
                     var data = GetCaseCountModelByDbs(item, res.Level)?.ToList();
                     if (data != null && data.Count > 0) list.AddRange(data);
                 }
-                _cache.Set(res.Level, list, 600);
+                _redis.Set(key, list.ToJson(), 600);
             }
-            var count = _cache.GetList<CaseCountModel>(res.Level);
+            var json = _redis.Get<string>(key);
+            var count = JsonConvert.DeserializeObject<List<CaseCountModel>>(json);
 
             return count.Where(expression.Compile());
         }
+
+
+        //private readonly ICache _cache = MemoryCache.Instance;
+        //public IEnumerable<CaseCountModel> GetDbContextList(string jobQueueFlag)
+        //{
+        //    var res = ConvertJobQueueFlagToState(jobQueueFlag);
+        //    var stateList = res.StateList;
+        //    Expression<Func<CaseCountModel, bool>> expression = ex => stateList.Contains(ex.States);
+
+        //    var list = new List<CaseCountModel>();
+        //    if (!_cache.Keys.Contains(res.Level))
+        //    {
+        //        foreach (var item in DAL.ConnStrs.Keys.Where(k => k.StartsWith("p")))
+        //        {
+        //            var data = GetCaseCountModelByDbs(item, res.Level)?.ToList();
+        //            if (data != null && data.Count > 0) list.AddRange(data);
+        //        }
+        //        _cache.Set(res.Level, list, 600);
+        //    }
+        //    var count = _cache.GetList<CaseCountModel>(res.Level);
+
+        //    return count.Where(expression.Compile());
+        //}
 
         private IEnumerable<CaseCountModel> GetCaseCountModelByDbs(string key, string level = "BC")
         {

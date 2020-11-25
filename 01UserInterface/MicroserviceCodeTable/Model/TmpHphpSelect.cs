@@ -14,35 +14,35 @@ namespace MicroserviceCodeTable.Model
     public partial class TmpHphpSelect : ITmpHphpSelect
     {
         #region 属性
-        private String _HphpID;
+        private String _HphpID = "";
         /// <summary></summary>
         [DisplayName("HphpID")]
         [DataObjectField(false, false, false, 16)]
         [BindColumn("HPHP_ID", "", "varchar(16)")]
         public String HphpID { get => _HphpID; set { if (OnPropertyChanging(__.HphpID, value)) { _HphpID = value; OnPropertyChanged(__.HphpID); } } }
 
-        private String _HphpName;
+        private String _HphpName = "";
         /// <summary></summary>
         [DisplayName("HphpName")]
         [DataObjectField(false, false, false, 255)]
         [BindColumn("HPHP_NAME", "", "varchar(255)")]
         public String HphpName { get => _HphpName; set { if (OnPropertyChanging(__.HphpName, value)) { _HphpName = value; OnPropertyChanged(__.HphpName); } } }
 
-        private String _ScctName;
+        private String _ScctName = "";
         /// <summary></summary>
         [DisplayName("ScctName")]
         [DataObjectField(false, false, false, 155)]
         [BindColumn("SCCT_NAME", "", "varchar(155)")]
         public String ScctName { get => _ScctName; set { if (OnPropertyChanging(__.ScctName, value)) { _ScctName = value; OnPropertyChanged(__.ScctName); } } }
 
-        private String _HphpNameFst;
+        private String _HphpNameFst = "";
         /// <summary></summary>
         [DisplayName("HphpNameFst")]
         [DataObjectField(false, false, false, 125)]
         [BindColumn("HPHP_NAME_FST", "", "varchar(125)")]
         public String HphpNameFst { get => _HphpNameFst; set { if (OnPropertyChanging(__.HphpNameFst, value)) { _HphpNameFst = value; OnPropertyChanged(__.HphpNameFst); } } }
 
-        private String _HphpNameFul;
+        private String _HphpNameFul = "";
         /// <summary></summary>
         [DisplayName("HphpNameFul")]
         [DataObjectField(false, false, false, 555)]

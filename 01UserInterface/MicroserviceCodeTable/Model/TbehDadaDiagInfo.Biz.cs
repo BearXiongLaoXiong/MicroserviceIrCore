@@ -120,7 +120,7 @@ namespace MicroserviceCodeTable.Model
         }
 
         private static IEnumerable<TbehDadaDiagInfo> SearchKey(IEnumerable<TbehDadaDiagInfo> iEnumerable, string key)
-        => iEnumerable == null || string.IsNullOrWhiteSpace(key) ? iEnumerable : iEnumerable.Where(x => (x.DadaDesc??"").Contains(key) || (x.DadaID??"").Contains(key) || (x.DadaNameFst ?? "").Contains(key) || (x.DadaNameFul??"").Contains(key));
+        => iEnumerable == null || string.IsNullOrWhiteSpace(key) ? iEnumerable : iEnumerable.Where(x => x.DadaDesc.Contains(key) || x.DadaID.Contains(key) || x.DadaNameFst .Contains(key) || x.DadaNameFul.Contains(key));
 
 
         public static IEnumerable<TbehDadaDiagInfo> FindAllByDadaDesc(String desc)

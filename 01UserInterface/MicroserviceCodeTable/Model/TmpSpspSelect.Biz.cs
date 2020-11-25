@@ -98,7 +98,7 @@ namespace MicroserviceCodeTable.Model
         private static string[] SpiFilterList = new[] { "SYB", "AIABJ" };
 
         private static IEnumerable<TmpSpspSelect> SearchKey(IEnumerable<TmpSpspSelect> iEnumerable, string key)
-        => iEnumerable == null || string.IsNullOrWhiteSpace(key) ? iEnumerable : iEnumerable.Where(x => (x.SpspDesc ?? "").Contains(key) || (x.SpspID ?? "").Contains(key) || (x.SpspNameFst ?? "").Contains(key) || (x.SpspNameFul ?? "").Contains(key));
+        => iEnumerable == null || string.IsNullOrWhiteSpace(key) ? iEnumerable : iEnumerable.Where(x => x.SpspDesc.Contains(key) || x.SpspNameFst.Contains(key) /*|| x.SpspNameFul.Contains(key)*/);
 
         /// <summary>根据SpspDesc查找</summary>
         /// <param name="desc">SpspDesc</param>

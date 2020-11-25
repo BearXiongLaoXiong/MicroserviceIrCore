@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.0-preview2.20297.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.10" />
     <PackageReference Include="NewLife.Redis" Version="3.8.2020.1101" />
     <PackageReference Include="NewLife.XCode" Version="10.0.2020.1101" />
   </ItemGroup>
