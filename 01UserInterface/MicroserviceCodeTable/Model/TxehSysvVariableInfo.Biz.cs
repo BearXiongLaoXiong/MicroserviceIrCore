@@ -16,7 +16,6 @@ namespace MicroserviceCodeTable.Model
         #region 对象操作
         static TxehSysvVariableInfo()
         {
-
             _redis.Log = XTrace.Log;
             _redis.Init("Server=10.127.2.16:7001;Password=123456;Db=0");
             // 过滤器 UserModule、TimeModule、IPModule
@@ -128,8 +127,6 @@ namespace MicroserviceCodeTable.Model
 
         public static string FindAllBySysvKy(string connectionString, string name, string key)
         {
-            var sss = TbehCnevClientEnvironmentInfoToRedisConf.FindDistinctAllFromCache();
-            //if (sysvKy <= 0) return null;
             var cnev = TbehCnevClientEnvironmentInfoToRedisConf.FindDistinctAllFromCache().FirstOrDefault(x => x.CnevID == connectionString);
             if (cnev == null) return null;
             var redisKey = $"{cnev.CncnFlag}:{name}:{nameof(TxehSysvVariableInfo)}";
@@ -141,8 +138,8 @@ namespace MicroserviceCodeTable.Model
             else if (!_redis.ContainsKey(redisKey))
             {
                 Meta.ConnName = $"p{cnev.CnevIp}";
-                var aa = FindAll()?.OrderBy(x => x.EnttCompID).ThenBy(x => x.SysvEntity).ThenBy(x => x.SysvType).ThenBy(x => x.SysvValue);
-                var list = aa?.GroupBy(x => $"{x.EnttCompID?.Trim()}{x.SysvEntity?.Trim()}{x.SysvType?.Trim()}").ToDictionary(x => x.Key, y => y.Select(d => new SysvComboboxItems(d.SysvValue, d.SysvDesc)).ToJson());
+                //var aa = FindAll()?.OrderBy(x => x.EnttCompID).ThenBy(x => x.SysvEntity).ThenBy(x => x.SysvType).ThenBy(x => x.SysvValue);
+                var list = FindAll()?.GroupBy(x => $"{x.EnttCompID?.Trim()}{x.SysvEntity?.Trim()}{x.SysvType?.Trim()}").ToDictionary(x => x.Key, y => y.Select(d => new SysvComboboxItems(d.SysvValue, d.SysvDesc)).ToJson());
                 if (list == null || list.Count < 1) return null;
                 var rs1 = hash.HMSet(list);
                 _redis.SetExpire(redisKey, TimeSpan.FromHours(24));
@@ -152,9 +149,9 @@ namespace MicroserviceCodeTable.Model
         }
 
         /// <summary>
-        /// 仅仅dev uat专用 
+        /// 仅仅dev uat peixun demo专用 
         /// </summary>
-        /// <param name="connectionString">字段只会匹配dev uat</param>
+        /// <param name="connectionString">字段只会匹配dev uat peixun demo</param>
         /// <param name="name"></param>
         /// <param name="key"></param>
         /// <returns></returns>
@@ -173,8 +170,8 @@ namespace MicroserviceCodeTable.Model
             else if (!_redis.ContainsKey(redisKey))
             {
                 Meta.ConnName = $"p{cnev.CnevIp}";
-                var aa = FindAll()?.OrderBy(x => x.EnttCompID).ThenBy(x => x.SysvEntity).ThenBy(x => x.SysvType).ThenBy(x => x.SysvValue);
-                var list = aa?.GroupBy(x => $"{x.EnttCompID?.Trim()}{x.SysvEntity?.Trim()}{x.SysvType?.Trim()}").ToDictionary(x => x.Key, y => y.Select(d => new SysvComboboxItems(d.SysvValue, d.SysvDesc)).ToJson());
+                //var aa = FindAll()?.OrderBy(x => x.EnttCompID).ThenBy(x => x.SysvEntity).ThenBy(x => x.SysvType).ThenBy(x => x.SysvValue);
+                var list = FindAll()?.GroupBy(x => $"{x.EnttCompID?.Trim()}{x.SysvEntity?.Trim()}{x.SysvType?.Trim()}").ToDictionary(x => x.Key, y => y.Select(d => new SysvComboboxItems(d.SysvValue, d.SysvDesc)).ToJson());
                 if (list == null || list.Count < 1) return null;
                 var rs1 = hash.HMSet(list);
                 _redis.SetExpire(redisKey, TimeSpan.FromHours(24));

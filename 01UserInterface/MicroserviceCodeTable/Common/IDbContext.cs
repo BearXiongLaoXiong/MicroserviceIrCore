@@ -16,6 +16,7 @@ namespace MicroserviceCodeTable.Common
     public interface IDbContext
     {
         IEnumerable<CaseCountModel> GetDbContextList(string jobQueueFlag);
+        int ReLoadCache(string jobQueueFlag);
     }
 
     public class MainDbContext : IDbContext
@@ -36,14 +37,19 @@ namespace MicroserviceCodeTable.Common
             Expression<Func<CaseCountModel, bool>> expression = ex => stateList.Contains(ex.States);
 
             var key = $"casecount:prd:{res.Level}";
-
+            var time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             var list = new List<CaseCountModel>();
             if (!_redis.ContainsKey(key))
             {
-                foreach (var item in DAL.ConnStrs.Keys.Where(k => k.StartsWith("p")))
+                //排除 dev,uat,peixun,demo4个不统计环境
+                foreach (var item in DAL.ConnStrs.Keys.Where(k => k.StartsWith("p") && k!= "p10.127.1.3" && k != "p10.127.1.212" && k != "p10.127.1.38" && k != "p10.127.1.151"))
                 {
                     var data = GetCaseCountModelByDbs(item, res.Level)?.ToList();
-                    if (data != null && data.Count > 0) list.AddRange(data);
+                    if (data != null && data.Count > 0)
+                    {
+                        data.ForEach(x => x.CreateDate = time);
+                        list.AddRange(data);
+                    }
                 }
                 _redis.Set(key, list.ToJson(), 600);
             }
@@ -53,6 +59,12 @@ namespace MicroserviceCodeTable.Common
             return count.Where(expression.Compile());
         }
 
+        public int ReLoadCache(string jobQueueFlag)
+        {
+            var res = ConvertJobQueueFlagToState(jobQueueFlag);
+            var key = $"casecount:prd:{res.Level}";
+            return _redis.Remove(key);
+        }
 
         //private readonly ICache _cache = MemoryCache.Instance;
         //public IEnumerable<CaseCountModel> GetDbContextList(string jobQueueFlag)

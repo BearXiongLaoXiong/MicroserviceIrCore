@@ -160,7 +160,7 @@ namespace MicroserviceCodeTable.Model
             else if (!_redis.ContainsKey(redisKey))
             {
                 Meta.ConnName = $"u{cnev.CnevIp}";
-                var list = FindAll()?.OrderBy(x => x.EnttCompID).ThenBy(x => x.SysvEntity).ThenBy(x => x.SysvType).ThenBy(x => x.SysvValue)?.GroupBy(x => $"{x.EnttCompID?.Trim()}{x.SysvEntity?.Trim()}{x.SysvType?.Trim()}").ToDictionary(x => x.Key, y => y.Select(d => new SysvComboboxItems(d.SysvValue, d.SysvDesc)).ToJson());
+                var list = FindAll()?.GroupBy(x => $"{x.EnttCompID?.Trim()}{x.SysvEntity?.Trim()}{x.SysvType?.Trim()}").ToDictionary(x => x.Key, y => y.Select(d => new SysvComboboxItems(d.SysvValue, d.SysvDesc)).ToJson());
                 if (list == null || list.Count < 1) return null;
                 var rs1 = hash.HMSet(list);
                 _redis.SetExpire(redisKey, TimeSpan.FromHours(24));
@@ -170,9 +170,9 @@ namespace MicroserviceCodeTable.Model
         }
 
         /// <summary>
-        /// 仅仅dev uat专用 
+        /// 仅仅dev uat peixun demo专用 
         /// </summary>
-        /// <param name="connectionString">字段只会匹配dev uat</param>
+        /// <param name="connectionString">字段只会匹配dev uat peixun demo</param>
         /// <param name="name"></param>
         /// <param name="key"></param>
         /// <returns></returns>
@@ -190,7 +190,7 @@ namespace MicroserviceCodeTable.Model
             else if (!_redis.ContainsKey(redisKey))
             {
                 Meta.ConnName = $"u{cnev.CnevIp}";
-                var list = FindAll()?.OrderBy(x => x.EnttCompID).ThenBy(x => x.SysvEntity).ThenBy(x => x.SysvType).ThenBy(x => x.SysvValue)?.GroupBy(x => $"{x.EnttCompID?.Trim()}{x.SysvEntity?.Trim()}{x.SysvType?.Trim()}").ToDictionary(x => x.Key, y => y.Select(d => new SysvComboboxItems(d.SysvValue, d.SysvDesc)).ToJson());
+                var list = FindAll()?.GroupBy(x => $"{x.EnttCompID?.Trim()}{x.SysvEntity?.Trim()}{x.SysvType?.Trim()}").ToDictionary(x => x.Key, y => y.Select(d => new SysvComboboxItems(d.SysvValue, d.SysvDesc)).ToJson());
                 if (list == null || list.Count < 1) return null;
                 var rs1 = hash.HMSet(list);
                 _redis.SetExpire(redisKey, TimeSpan.FromHours(24));

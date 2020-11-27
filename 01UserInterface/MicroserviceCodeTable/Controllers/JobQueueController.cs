@@ -45,9 +45,13 @@ namespace MicroserviceCodeTable.Controllers
             .ToArray();
         }
 
+      
         [HttpGet("jobchart/{flag}")]
         public async Task<IEnumerable<CaseCountModel>> FindAllBySpspDesc(string flag)
         => await Task.FromResult(_iDbContext.GetDbContextList(flag)?? new List<CaseCountModel>() {new CaseCountModel() });
+        
+        [HttpGet("ReLoadCache/{flag}")]
+        public int ReLoadCache(string flag) => _iDbContext.ReLoadCache(flag);
 
     }
 

@@ -121,6 +121,16 @@ namespace MicroserviceCodeTable.Model
 
         public static string FindListByUserId(string dbFlag, string id)
         {
+            dbFlag = dbFlag switch
+            {
+                "yndev" => "MSSQLDevMainMaster",
+                "ynuat" => "MSSQLUatMainMaster",
+                "peixun" => "MSSQLPeixunMainMaster",
+                "demo" => "MSSQLDemoMainMaster",
+                "spiprd" => "MSSQLSpiMainMaster",
+                "ynprd" => "MSSQLPrdMainMaster",
+                _ => "MSSQLDevMainMaster",
+            };
             var redisKey = $"{nameof(TbehUscnUserClientInfo)}:{dbFlag}";
             var hash = _redis.GetDictionary<string>(redisKey) as RedisHash<String, string>;
             var result = hash.HMGet(new[] { id });
@@ -129,10 +139,11 @@ namespace MicroserviceCodeTable.Model
             else if (!_redis.ContainsKey(redisKey))
             {
                 Meta.ConnName = dbFlag;
-                var list = FindAll()?.GroupBy(x => x.UsusID).ToDictionary(x => x.Key, y => y.Select(d => new { CnId = d.CncnID, UId = d.CncnUsusID }).ToJson());
+                var ss = FindAll();
+                var list = ss?.GroupBy(x => x.UsusID).ToDictionary(x => x.Key, y => y.Select(d => new { CnId = d.CncnID, UId = d.CncnUsusID }).ToJson());
                 if (list == null || list.Count < 1) return null;
                 var rs1 = hash.HMSet(list);
-                _redis.SetExpire(redisKey, TimeSpan.FromHours(1));
+                _redis.SetExpire(redisKey, TimeSpan.FromHours(2));
                 return hash.HMGet(new[] { id })[0];
             }
             return "";

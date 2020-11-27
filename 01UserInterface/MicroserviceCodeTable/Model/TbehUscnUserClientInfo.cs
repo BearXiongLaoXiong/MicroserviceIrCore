@@ -11,7 +11,7 @@ namespace MicroserviceCodeTable.Model
     [Serializable]
     [DataObject]
     [BindIndex("PK__TBEH_USC__1889058B31895D4D", true, "USCN_KY")]
-    [BindTable("TBEH_USCN_USER_CLIENT_INFO", Description = "", ConnName = "MSSQLMainMaster", DbType = DatabaseType.SqlServer)]
+    [BindTable("TBEH_USCN_USER_CLIENT_INFO", Description = "", ConnName = "MSSQLPrdMainMaster", DbType = DatabaseType.SqlServer)]
     public partial class TbehUscnUserClientInfo : ITbehUscnUserClientInfo
     {
         #region 属性

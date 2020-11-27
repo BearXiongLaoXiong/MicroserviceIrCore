@@ -13,5 +13,7 @@ namespace MicroserviceCodeTable.Model
         public string States { get; set; } = "";
         //public int CountsText { get; set; }
         public int Counts { get; set; }
+
+        public string CreateDate { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace MicroserviceCodeTable.Model
     /// <summary></summary>
     [Serializable]
     [DataObject]
-    [BindTable("TBEH_CNEV_CLIENT_ENVIRONMENT_INFO_TO_REDIS_CONF", Description = "", ConnName = "MSSQLMainMaster", DbType = DatabaseType.SqlServer)]
+    [BindTable("TBEH_CNEV_CLIENT_ENVIRONMENT_INFO_TO_REDIS_CONF", Description = "", ConnName = "MSSQLPrdMainMaster", DbType = DatabaseType.SqlServer)]
     public partial class TbehCnevClientEnvironmentInfoToRedisConf : ITbehCnevClientEnvironmentInfoToRedisConf
     {
         #region 属性
