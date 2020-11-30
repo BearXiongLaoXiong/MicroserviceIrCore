@@ -51,7 +51,7 @@ namespace MicroserviceCodeTable.Common
                         list.AddRange(data);
                     }
                 }
-                _redis.Set(key, list.ToJson(), 600);
+                _redis.Set(key, list.ToJson(), 1800);
             }
             var json = _redis.Get<string>(key);
             var count = JsonConvert.DeserializeObject<List<CaseCountModel>>(json);
