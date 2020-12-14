@@ -33,7 +33,9 @@ namespace MicroserviceCodeTable.Model
         #region 对象操作
         static TbehUscnUserClientInfo()
         {
+#if DEBUG
             _redis.Log = XTrace.Log;
+#endif
             _redis.Init("Server=10.127.2.16:7001;Password=123456;Db=0");
             // 过滤器 UserModule、TimeModule、IPModule
         }
