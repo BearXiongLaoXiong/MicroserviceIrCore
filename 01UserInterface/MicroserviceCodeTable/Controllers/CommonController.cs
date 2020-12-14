@@ -28,6 +28,7 @@ namespace MicroserviceCodeTable.Controllers
         {
             "u" => await Task.FromResult(TbehSysvVariableInfo.FindAllBySysvKy(con, name, key)),
             "p" => await Task.FromResult(TxehSysvVariableInfo.FindAllBySysvKy(con, name, key)),
+            "m" => await Task.FromResult(TbehSysvVariableInfo.FindAllByMainSysvKy(con, name, key)),
             _ => null
         };
 

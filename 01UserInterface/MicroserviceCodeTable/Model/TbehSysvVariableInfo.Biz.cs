@@ -32,7 +32,7 @@ namespace MicroserviceCodeTable.Model
         #region 对象操作
         static TbehSysvVariableInfo()
         {
-#if !DEBUG
+#if DEBUG
             _redis.Log = XTrace.Log;
 #endif
             _redis.Init("Server=10.127.2.16:7001;Password=123456;Db=0");
@@ -190,6 +190,29 @@ namespace MicroserviceCodeTable.Model
             else if (!_redis.ContainsKey(redisKey))
             {
                 Meta.ConnName = $"u{cnev.CnevIp}";
+                var list = FindAll()?.GroupBy(x => $"{x.EnttCompID?.Trim()}{x.SysvEntity?.Trim()}{x.SysvType?.Trim()}").ToDictionary(x => x.Key, y => y.Select(d => new SysvComboboxItems(d.SysvValue, d.SysvDesc)).ToJson());
+                if (list == null || list.Count < 1) return null;
+                var rs1 = hash.HMSet(list);
+                _redis.SetExpire(redisKey, TimeSpan.FromHours(24));
+                return hash.HMGet(new[] { key })[0];
+            }
+            return "";
+        }
+
+
+        public static string FindAllByMainSysvKy(string connectionString, string name, string key)
+        {
+            if (!DAL.ConnStrs.ContainsKey(connectionString)) return null;
+            var redisKey = $"{connectionString}:{name}:{nameof(TbehSysvVariableInfo)}";
+
+            var hash = _redis.GetDictionary<string>(redisKey) as RedisHash<String, string>;
+            var result = hash.HMGet(new[] { key });
+
+            if (result.Length > 0 && result[0] != null) return result[0];
+            else if (!_redis.ContainsKey(redisKey))
+            {
+                Meta.ConnName = connectionString;
+                //var aa = FindAll()?.OrderBy(x => x.EnttCompID).ThenBy(x => x.SysvEntity).ThenBy(x => x.SysvType).ThenBy(x => x.SysvValue);
                 var list = FindAll()?.GroupBy(x => $"{x.EnttCompID?.Trim()}{x.SysvEntity?.Trim()}{x.SysvType?.Trim()}").ToDictionary(x => x.Key, y => y.Select(d => new SysvComboboxItems(d.SysvValue, d.SysvDesc)).ToJson());
                 if (list == null || list.Count < 1) return null;
                 var rs1 = hash.HMSet(list);

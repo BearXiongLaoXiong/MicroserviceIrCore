@@ -25,7 +25,9 @@ namespace MicroserviceCodeTable.Common
 
         public MainDbContext()
         {
+#if DEBUG
             _redis.Log = XTrace.Log;
+#endif
             _redis.Init("Server=10.127.2.16:7001;Password=123456;Db=0");
         }
 
@@ -51,7 +53,7 @@ namespace MicroserviceCodeTable.Common
                         list.AddRange(data);
                     }
                 }
-                _redis.Set(key, list.ToJson(), 1800);
+                _redis.Set(key, list.ToJson(), 3600);
             }
             var json = _redis.Get<string>(key);
             var count = JsonConvert.DeserializeObject<List<CaseCountModel>>(json);

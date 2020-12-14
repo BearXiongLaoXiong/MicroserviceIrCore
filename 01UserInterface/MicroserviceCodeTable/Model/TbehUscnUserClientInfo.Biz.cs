@@ -112,7 +112,7 @@ namespace MicroserviceCodeTable.Model
             // 实体缓存
             if (Meta.Session.Count < 1000) return Meta.Cache.Find(e => e.UscnKy == uscnKy);
 
-            // 单对象缓存
+            // 单对象缓存l
             return Meta.SingleCache[uscnKy];
 
             //return Find(_.UscnKy == uscnKy);
