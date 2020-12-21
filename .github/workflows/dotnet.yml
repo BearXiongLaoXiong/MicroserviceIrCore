@@ -14,9 +14,13 @@ jobs:
     - name: 2.Login to DockerHub
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build -t xiongwebapi:v.1.0 .
-        docker tag xiongwebapi:v.1.0 sh17951/xiongwebapi:v.1.0
-        docker push sh17951/xiongwebapi:v.1.0
+        tag=${GITHUB_REF:11}
+        echo "Build Tag '$tag'"
+        docker build -t sh17951/xiongwebapi:$tag .
+        docker push sh17951/xiongwebapi:$tag
+        #docker build -t xiongwebapi:v.1.0 .
+        #docker tag xiongwebapi:v.1.0 sh17951/xiongwebapi:v.1.0
+        #docker push sh17951/xiongwebapi:v.1.0
     
    
    
