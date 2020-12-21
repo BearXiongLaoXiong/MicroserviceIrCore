@@ -17,7 +17,7 @@ jobs:
       uses: sambaiz/test-docker-github-action@v1.0.1
       with: 
         # What do you say?
-        i-say:  test name is 456
+        i-say:  test name is 456 ${{ secrets.DOCKERHUB_USERNAME }} ,haha
     #-
     #    name: 2.Set up QEMU
     #    uses: docker/setup-qemu-action@v1
