@@ -5,17 +5,19 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - 
-      name: 1.checkout 
+    - name: 1.checkout 
       uses: actions/checkout@v2
-    
+    - name: sambaiz-test-docker-github-action
+      # You may pin to the exact commit or the version.
+      # uses: sambaiz/test-docker-github-action@5f162118833bef10815981309e18eb5a8903ea8c
+      uses: sambaiz/test-docker-github-action@v1.0.1
+      with: 
+        # What do you say?
+        i-say:  ${{ secrets.DOCKER_USERNAME }}
     #-
     #    name: 2.Set up QEMU
     #    uses: docker/setup-qemu-action@v1
@@ -28,9 +30,5 @@ jobs:
     #  with:
     #    dotnet-version: 5.0.100
              
-    - name: 4.login dockerhub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_USERNAME.DOCKER_PASSWORD }}
+  
      
