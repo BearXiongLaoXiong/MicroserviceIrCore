@@ -150,6 +150,22 @@ namespace MicroserviceCodeTable.Model
             }
             return "";
         }
+
+        public static int ReLoadCache(string dbFlag)
+        {
+            dbFlag = dbFlag switch
+            {
+                "yndev" => "MSSQLDevMainMaster",
+                "ynuat" => "MSSQLUatMainMaster",
+                "peixun" => "MSSQLPeixunMainMaster",
+                "demo" => "MSSQLDemoMainMaster",
+                "spiprd" => "MSSQLSpiMainMaster",
+                "ynprd" => "MSSQLPrdMainMaster",
+                _ => "MSSQLDevMainMaster",
+            };
+            var redisKey = $"{nameof(TbehUscnUserClientInfo)}:{dbFlag}";
+            return _redis.Remove(redisKey);
+        }
         #endregion
 
         #region 高级查询
