@@ -20,8 +20,18 @@ jobs:
       with:
         dotnet-version: 5.0.100
         
-    - name: dotnet build
-      run: donnet build --c release
+    - name: 3.dotnet build
+      run: donnet build  01UserInterface\MicroserviceCodeTable/MicroserviceCodeTable.csproj -c release
       
-      
+    - name: 4.Docker Build & push to Docker Hub
+      uses: opspresso/action-docker@master
+      with:
+        args: --dockder
+      env:
+        USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKERFILE: "Dockerfile"
+        IMAGE_NAME: "sh17951/xiongwebapi1"
+        TAG_NAME: "v0.0.1"
+        LATEST: "true"
      
