@@ -2,9 +2,7 @@ name: build and push docker hub
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    tags: -v*
 jobs:
   build:
     runs-on: ubuntu-latest
