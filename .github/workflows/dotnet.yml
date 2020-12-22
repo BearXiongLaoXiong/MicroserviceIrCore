@@ -1,32 +1,27 @@
-name: .NET
+name: build and push docker hub
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
+    tags: -v*
 jobs:
   build:
-
-    runs-on: centos-latest
-
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.100
-    - name: Docker Build & push to Docker Hub
-      uses: opspresso/action-docker@master
-      with:
-        args: --dockder
-      env:
-        USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        DOCKERFILE: "Dockerfile"
-        IMAGE_NAME: "sh17951/xiongwebapi1"
-        TAG_NAME: "v0.0.1"
-        LATEST: "true"
-      
+    - name: 1.checkout 
+      uses: actions/checkout@v2
+    - name: 2.Login to DockerHub
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        tag=${GITHUB_REF:11}
+        echo "Build Tag '$tag'"
+        docker build -t sh17951/xiongwebapi:$tag .
+        docker push sh17951/xiongwebapi:$tag
+        #docker build -t xiongwebapi:v.1.0 .
+        #docker tag xiongwebapi:v.1.0 sh17951/xiongwebapi:v.1.0
+        #docker push sh17951/xiongwebapi:v.1.0
+    
+   
+   
+             
+  
      
