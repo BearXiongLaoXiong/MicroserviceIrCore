@@ -2,18 +2,22 @@ name: build and push docker hub
 
 on:
   push:
-    tags: -v*
+    tags: 
+    - 'v*'
 env:
   IMAGE_NAME: sh17951/xiongwebapi
 jobs:
-  push:
+  release:
     runs-on: ubuntu-latest
     steps:
     - name: 1.checkout 
       uses: actions/checkout@v2
+    - name: Get version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     
-    - name: build image
-      run: docker build -t $IMAGE_NAME
+    #- name: build image
+    #  run: docker build -t $IMAGE_NAME
     #- name: 2.Login to DockerHub
     #  run: |
     #    docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
