@@ -47,7 +47,15 @@ jobs:
         docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
         # 进行 push
         docker push $IMAGE_ID:$VERSION
-    
+        
+    - name: 5.Execute SSH commmands on remote server
+      uses: JimCronqvist/action-ssh@master
+      with:
+        hosts: 'root@203.156.248.106:22222'
+        privateKey: ${{ secrets.PRIVATE_KEY }}
+        command: |
+            ls -lah
+            echo "I am xiong"
     #- name: build image
     #  run: docker build -t $IMAGE_NAME
     #- name: 2.Login to DockerHub
