@@ -53,9 +53,11 @@ jobs:
       with:
         hosts: 'root@203.156.248.106:22222'
         privateKey: ${{ secrets.PRIVATE_KEY }}
+        debug: true
         command: |
             ls -lah
             echo "I am xiong"
+            
     #- name: build image
     #  run: docker build -t $IMAGE_NAME
     #- name: 2.Login to DockerHub
