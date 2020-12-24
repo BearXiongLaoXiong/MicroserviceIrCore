@@ -19,11 +19,7 @@ jobs:
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
       with:
-        host: "203.156.248.106"
-        username: "root"
-        password: "laoxiong1!"
-        port: "22222"
-        script: whoami
+        host: 123
    
             
             
