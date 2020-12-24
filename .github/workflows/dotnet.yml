@@ -28,6 +28,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
+        envs: SHA
         script: |
           whoami
           echo "sha: $SHA"
@@ -40,7 +41,7 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           echo version = $IMAGE_VERSION
-          ./abc $IMAGE_VERSION
+          ./abc $SHA
           
           
    
