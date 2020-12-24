@@ -26,6 +26,17 @@ jobs:
         user: root
         key: ${{ secrets.PRIVATE_KEY}}
         port: 22222
+    - name: ls -a via OPEN SSH Private Key
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: echo "I am xiong" 
+        host: "203.156.248.106"
+        port: 22222
+        username: root
+        
+        privateKey: ${{ secrets.PRIVATE_KEY}}
+      env:
+        CI: true
             
             
     #- name: build image
