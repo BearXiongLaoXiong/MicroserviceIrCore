@@ -22,7 +22,7 @@ jobs:
     - name: 5.executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
       env:
-        IMAGE_VERSION:  ${{ github.ref }}
+        IMAGE_VERSION: ${{ github.ref }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -31,7 +31,7 @@ jobs:
         script: |
           whoami
           
-          echo version = $IMAGE_VERSION
+          echo "version: $IMAGE_VERSION"
           IMAGE_ID=sh17951/$IMAGE_NAME
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           VERSION=$(echo "$IMAGE_VERSION"| sed -e 's,.*/\(.*\),\1,')
