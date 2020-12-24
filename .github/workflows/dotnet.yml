@@ -40,7 +40,8 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           echo version = $IMAGE_VERSION
-          docker run -itd -p 8015:80 --name xiongwebapi1 sh17951/xiongwebapi:v.12.22.01
+          ./abc sh17951/xiongwebapi:v.12.22.01
+          
           
    
             
