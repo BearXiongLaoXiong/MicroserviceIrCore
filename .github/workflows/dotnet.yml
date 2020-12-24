@@ -7,7 +7,7 @@ on:
 
 env:
   IMAGE_NAME: xiongwebapi
-  gitref:  1.1
+  gitref:  "${{ github.ref }}"
 
 jobs:
   push:
@@ -31,7 +31,7 @@ jobs:
           ls -a 
           IMAGE_ID=sh17951/$IMAGE_NAME
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-          VERSION=$(echo "$gitref" | sed -e 's,.*/\(.*\),\1,')
+          VERSION=$(echo $gitref| sed -e 's,.*/\(.*\),\1,')
           [[ "$gitref" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           [ "$VERSION" == "master" ] && VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
