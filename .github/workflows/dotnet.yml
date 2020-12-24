@@ -71,7 +71,7 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           echo version = $IMAGE_VERSION
-          ./abc $IMAGE_ID:$VERSION
+          ./hubactionbash $IMAGE_ID:$VERSION
           
           
    
