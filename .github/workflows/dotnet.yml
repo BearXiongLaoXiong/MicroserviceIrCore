@@ -15,15 +15,17 @@ jobs:
     
     - name: get version
       run: echo version = "${{ github.ref }}"
-    - name: 5.Execute SSH commmands on remote server
-      uses: JimCronqvist/action-ssh@master
+
+    - name: ls -a via ssh
+      uses: fifsky/ssh-action@master
       with:
-        hosts: 'root@203.156.248.106:22222'
-        privateKey: ${{ secrets.PRIVATE_KEY }}
-        debug: true
         command: |
-            ls -lah
-            echo "I am xiong" 
+          ls -a
+          echo "I am xiong" 
+        host: "root@203.156.248.106:22222"
+        user: root
+        key: ${{ secrets.PRIVATE_KEY}}
+            
             
     #- name: build image
     #  run: docker build -t $IMAGE_NAME
