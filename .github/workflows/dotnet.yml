@@ -21,7 +21,7 @@ jobs:
       with:
         host: "203.156.248.106"
         username: "root"
-        key: ${{ secrets.PRIVATE_KEY}}
+        password: "laoxiong1!"
         port: "22222"
         script: whoami
    
