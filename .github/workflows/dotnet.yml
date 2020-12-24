@@ -2,22 +2,53 @@ name: Release
 
 on:
   push:
-    branches: [ master ]
-
+    tags:
+    - 'v*'
 
 env:
   IMAGE_NAME: xiongwebapi
   IMAGE_VERSION: ${{ github.ref }}
+  
 jobs:
   push:
     runs-on: ubuntu-latest
     steps:
-
+    
+    - name: 0.get version
+      run: echo version = "${{ github.ref }}"
     - name: 1.checkout 
       uses: actions/checkout@v2
     
-   
+    - name: 2.Build image
+      run: docker build . --file Dockerfile --tag $IMAGE_NAME
+        # 登录到 dockerhub，使用 GitHub secrets 传入账号密码，密码被加密存储在 GitHub 服务器，添加方法见下图。
+    - name: 3.login dockerhub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: 4.Push image
+      run: |
+        # 拼接镜像 id，这个镜像 id 就是在使用 docker 镜像时 pull 后面的名字。
+        IMAGE_ID=sh17951/$IMAGE_NAME
+
+        # 将所有的大写字母转为小写
+        IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+        # 从 GitHub.ref 中取出版本
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+        # 从 tag 名字中替换 v 字符
+        [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+        # Use Docker `latest` tag convention
+        [ "$VERSION" == "master" ] && VERSION=latest
+
+        echo IMAGE_ID=$IMAGE_ID
+        echo VERSION=$VERSION
+        # 设置镜像 id 和版本号
+        docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+        # 进行 push
+        docker push $IMAGE_ID:$VERSION
+        
     - name: 5.executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
       env:
