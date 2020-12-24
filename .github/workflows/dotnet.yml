@@ -16,27 +16,15 @@ jobs:
     - name: get version
       run: echo version = "${{ github.ref }}"
 
-    - name: ls -a via ssh
-      uses: fifsky/ssh-action@master
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
       with:
-        command: |
-          ls -a
-          echo "I am xiong" 
         host: "203.156.248.106"
-        user: root
+        username: "root"
         key: ${{ secrets.PRIVATE_KEY}}
-        port: 22222
-    - name: ls -a via OPEN SSH Private Key
-      uses: garygrossgarten/github-action-ssh@release
-      with:
-        command: echo "I am xiong" 
-        host: "203.156.248.106"
-        port: 22222
-        username: root
-        
-        privateKey: ${{ secrets.PRIVATE_KEY}}
-      env:
-        CI: true
+        port: "22222"
+        script: whoami
+   
             
             
     #- name: build image
