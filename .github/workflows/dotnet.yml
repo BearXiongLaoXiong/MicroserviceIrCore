@@ -7,7 +7,6 @@ on:
 
 env:
   IMAGE_NAME: xiongwebapi
-  IMAGE_VERSION:  ${{ github.ref }}
 
 jobs:
   push:
@@ -22,6 +21,7 @@ jobs:
     - name: 5.executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
       env:
+        SHA: ${{ github.sha }}
         IMAGE_VERSION: ${{ github.ref }}
       with:
         host: ${{ secrets.HOST }}
@@ -30,7 +30,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           whoami
-          
+          echo "sha: $SHA"
           echo "version: $IMAGE_VERSION"
           IMAGE_ID=sh17951/$IMAGE_NAME
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
