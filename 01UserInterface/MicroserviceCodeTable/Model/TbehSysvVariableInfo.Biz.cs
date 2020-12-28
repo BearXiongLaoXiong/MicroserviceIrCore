@@ -221,6 +221,20 @@ namespace MicroserviceCodeTable.Model
             }
             return "";
         }
+
+        /// <summary>
+        /// 移除key
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static int ReLoadCache(string connectionString, string name)
+        {
+            var cnev = TbehCnevClientEnvironmentInfoToRedisConf.FindDistinctAllFromCache().FirstOrDefault(x => x.CnevID == connectionString);
+            if (cnev == null) return 0;
+            var redisKey = $"{cnev.CncnFlag}:{name}:{nameof(TbehSysvVariableInfo)}";
+            return _redis.Remove(redisKey);
+        }
         #endregion
     }
 }

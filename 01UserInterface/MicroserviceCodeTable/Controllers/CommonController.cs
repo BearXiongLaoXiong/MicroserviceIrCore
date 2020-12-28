@@ -41,5 +41,12 @@ namespace MicroserviceCodeTable.Controllers
         };
         //=> await Task.FromResult(TxehSysvVariableInfo.FindAllBySysvKy("CB", "t", "ALLMEMESYSV_MEME_REL_CD"));
 
+        [HttpGet("ReLoadCache/{con}/{name}/")]
+        public async Task<int> ReLoadCache(string con, string name) => name switch
+        {
+            "u" => await Task.FromResult(TbehSysvVariableInfo.ReLoadCache(con, name)),
+            "p" => await Task.FromResult(TxehSysvVariableInfo.ReLoadCache(con, name)),
+            _ => 0
+        };
     }
 }

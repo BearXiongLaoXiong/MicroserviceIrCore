@@ -160,7 +160,6 @@ namespace MicroserviceCodeTable.Model
         /// <returns></returns>
         public static string FindAllByDevSysvKy(string connectionString, string name, string key)
         {
-            var sss = TbehCnevClientEnvironmentInfoToRedisConf.FindDistinctAllFromCache();
             //因为dev uat 环境 所以特改为匹配 cncnFlag
             var cnev = TbehCnevClientEnvironmentInfoToRedisConf.FindDistinctAllFromCache().FirstOrDefault(x => x.CncnFlag == connectionString);
             if (cnev == null) return null;
@@ -182,6 +181,20 @@ namespace MicroserviceCodeTable.Model
                 return hash.HMGet(new[] { key })[0];
             }
             return "";
+        }
+
+        /// <summary>
+        /// 移除key
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static int ReLoadCache(string connectionString, string name)
+        {
+            var cnev = TbehCnevClientEnvironmentInfoToRedisConf.FindDistinctAllFromCache().FirstOrDefault(x => x.CnevID == connectionString);
+            if (cnev == null) return 0;
+            var redisKey = $"{cnev.CncnFlag}:{name}:{nameof(TxehSysvVariableInfo)}";
+            return _redis.Remove(redisKey);
         }
 
         #endregion
